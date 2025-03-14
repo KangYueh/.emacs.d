@@ -9,6 +9,7 @@
 CVS
 .svn
 *~
+*.db
 .cvsignore
 .*.lock
 /tramp
