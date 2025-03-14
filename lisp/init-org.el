@@ -383,7 +383,23 @@ typical word processor."
       (shell . t)
       (sql . t)
       (sqlite . t)))))
-
+;;-------------------------------------------capture screenshot-----------
+;; capture screenshot
+(add-hook 'org-mode-hook 'iimage-mode) ; enable iimage-mode for org-mode
+(defun my/screenshot ()
+  "Take a screenshot into a unique-named file in the current buffer file
+  directory and insert a link to this file."
+  (interactive)
+  (setq filename
+        (concat (make-temp-name
+                 (concat  org-roam-directory "img/" ) ) ".png"))
+  (suspend-frame)
+  (call-process-shell-command "scrot" nil nil nil nil "-s" (concat
+                                                            "\"" filename "\"" ))
+  (insert (concat "[[" filename "]]"))
+  (org-display-inline-images)
+  )
+(global-set-key (kbd "C-c n s") 'my/screenshot)
 
 (provide 'init-org)
 ;;; init-org.el ends here

@@ -8,6 +8,5 @@
   (maybe-require-package 'consult-eglot))
 
 
-
 (provide 'init-eglot)
 ;;; init-eglot.el ends here
