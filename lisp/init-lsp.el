@@ -1,4 +1,4 @@
-;;; init-lsp.el --- Org-roam config -*- lexical-binding: t -*-
+;;; init-lsp.el --- Org-lsp config -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;;; use pyright as server and lsp-mode as client.
@@ -14,9 +14,12 @@
   :ensure t
   :hook (python-ts-mode . (lambda ()
                             (require 'lsp-pyright)
+                            (lsp)
                             (eglot-ensure))) ;; 启动 eglot
   )
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio"))))
 (defun my-auto-set-python-interpreter ()
   (setq-local lsp-pyright-python-executable-cmd (getenv "PYTHON_INTERPRETER")))
 
