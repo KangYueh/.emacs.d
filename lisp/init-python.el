@@ -8,8 +8,8 @@
 
 
 (setq auto-mode-alist
-      (append '(("SConstruct\\'" . python-mode)
-                ("SConscript\\'" . python-mode))
+      (append '(("SConstruct\\'" . python-ts-mode)
+                ("SConscript\\'" . python-ts-mode))
               auto-mode-alist))
 
 ;(setq python-shell-interpreter "python3")

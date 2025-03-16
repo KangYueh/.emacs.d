@@ -59,3 +59,5 @@ site-lisp/package/
 /projects
 /forge-*.sqlite
 /projectile.cache
+/.direnv
+/.dap-*
