@@ -40,6 +40,13 @@
 (when (maybe-require-package 'marginalia)
   (add-hook 'after-init-hook 'marginalia-mode))
 
+(when (maybe-require-package 'orderless)
+  (with-eval-after-load 'vertico
+    (require 'orderless)
+    (setq completion-styles '(orderless basic))))
+(setq completion-category-defaults nil
+      completion-category-overrides nil)
+(setq completion-cycle-threshold 4)
 
 (provide 'init-minibuffer)
 ;;; init-minibuffer.el ends here

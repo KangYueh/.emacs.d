@@ -20,8 +20,6 @@
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio"))))
-(defun my-auto-set-python-interpreter ()
-  (setq-local lsp-pyright-python-executable-cmd (getenv "PYTHON_INTERPRETER")))
 
 (provide 'init-lsp)
 ;;;init-lsp.el ends here

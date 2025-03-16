@@ -76,7 +76,7 @@
 
 (require 'init-recentf)
 (require 'init-minibuffer)
-(require 'init-hippie-expand)
+;;(require 'init-hippie-expand)
 (require 'init-corfu)
 (require 'init-windows)
 (require 'init-sessions)
@@ -153,7 +153,7 @@
 
 ;; insert custom el files
 (require 'init-lsp)
-(require 'init-snippet)
+;(require 'init-snippet)
 ;; Extra packages which don't require any configuration
 
 (require-package 'sudo-edit)
