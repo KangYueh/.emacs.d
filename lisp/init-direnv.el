@@ -1,5 +1,6 @@
 ;;; init-direnv.el --- Integrate with direnv -*- lexical-binding: t -*-
 ;;; Commentary:
+
 ;;; note by KangYueh:
 ;;; (1) install direnv in ubuntu, ensure the version of direnv is 2.32.1 or above.
 ;;; (2) create the file named .envrc, and filled with
@@ -7,6 +8,7 @@
 ;;; export VIRTUAL_ENV=/home/einhep/workspace/vrbi/.venv
 ;;; layout python
 ;;; ...for PYTHON_INTERPRETER var is defined for lsp, and VIRTUAL_ENV is defined for direnv
+
 ;;; Code:
 
 
