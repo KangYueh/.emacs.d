@@ -14,7 +14,7 @@
   :ensure t
   :hook (python-ts-mode . (lambda ()
                             (require 'lsp-pyright)
-                            (lsp))) ;; 启动 lsp-mode
+                            (eglot-ensure))) ;; 启动 eglot
   )
 
 (defun my-auto-set-python-interpreter ()
