@@ -7,11 +7,14 @@
 
 (when (and (version< "28.1" emacs-version) (maybe-require-package 'corfu))
   (setq-default corfu-auto t)
+  (setq corfu-quit-at-boundary t
+        corfu-quit-no-match t
+        corfu-preview-current t
+        corfu-scroll-margin 5)
   (with-eval-after-load 'eshell
     (add-hook 'eshell-mode-hook (lambda () (setq-local corfu-auto nil))))
   (setq-default corfu-quit-no-match 'separator)
   (add-hook 'after-init-hook 'global-corfu-mode)
-
 
 
   (with-eval-after-load 'corfu

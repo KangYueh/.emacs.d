@@ -33,9 +33,27 @@
 ;;; first of all should install eglot-booster using "m-x package-vc-install
 ;;; and pasting the url "https://github.com/jdtsmith/eglot-booster"
 
+
 (use-package eglot-booster
   :after eglot
   :config (eglot-booster-mode))
+
+(use-package
+  company-posframe
+  :requires posframe
+  :ensure t
+  :diminish company-posframe-mode)
+
+
+(use-package
+  company
+  :ensure t
+  :defer t
+  :config
+  (company-posframe-mode 1)
+  (setq company-idle-delay 0.2)
+  (setq company-show-quick-access t)
+  (setq company-selection-wrap-around t))
 
 (provide 'init-lsp)
 ;;;init-lsp.el ends here
