@@ -153,7 +153,7 @@
 
 ;; insert custom el files
 (require 'init-lsp)
-;(require 'init-snippet)
+(require 'init-snippet)
 ;; Extra packages which don't require any configuration
 
 (require-package 'sudo-edit)

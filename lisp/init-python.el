@@ -8,8 +8,8 @@
 
 
 (setq auto-mode-alist
-      (append '(("SConstruct\\'" . python-ts-mode)
-                ("SConscript\\'" . python-ts-mode))
+      (append '(("SConstruct\\'" . python-mode)
+                ("SConscript\\'" . python-mode))
               auto-mode-alist))
 
 ;(setq python-shell-interpreter "python3")
@@ -23,6 +23,8 @@
   (add-hook 'python-mode-hook 'sanityinc/flymake-ruff-maybe-enable))
 
 (maybe-require-package 'ruff-format)
+(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
+(add-hook 'python-ts-mode-hook 'ruff-format-on-save-mode)
 
 (when (maybe-require-package 'toml-mode)
   (add-to-list 'auto-mode-alist '("poetry\\.lock\\'" . toml-mode)))

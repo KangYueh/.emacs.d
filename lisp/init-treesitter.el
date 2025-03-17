@@ -16,6 +16,7 @@
 
 
 ;;; Enable built-in and pre-installed TS modes if the grammars are available
+
 (setq treesit-language-source-alist
       '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
         (c . ("https://github.com/tree-sitter/tree-sitter-c"))
