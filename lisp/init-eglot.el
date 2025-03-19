@@ -27,5 +27,10 @@
   :after consult eglot
   :bind (:map eglot-mode-map
               ("C-M-." . consult-eglot-symbols)))
+
+(use-package treemacs
+  :ensure t
+  )
+
 (provide 'init-eglot)
 ;;; init-eglot.el ends here

@@ -2,6 +2,11 @@
 ;;; Commentary:
 
 ;;; Code:
+;;---------------------------support org-mode image scroll line by line
+(use-package iscroll
+  :diminish iscroll-mode
+  :hook ((org-mode markdown-mode) . iscroll-mode))
+
 ;;-------------------------zotero--------------------------------
 (setq zot_bib '("/home/einhep/wdata/zotero/all.bib") ; Zotero 用 Better BibTeX 导出的 .bib 文件. 可以是多个文件
       zot_pdf "/home/einhep/wdata/zotero/" ; Zotero 的 ZotFile 同步文件夹
