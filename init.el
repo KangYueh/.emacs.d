@@ -178,6 +178,7 @@
            (treesit-available-p))
   (require 'init-treesitter))
 
+(require 'init-writing)
 
 
 ;; Allow access from emacsclient
