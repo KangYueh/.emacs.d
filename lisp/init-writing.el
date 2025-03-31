@@ -12,7 +12,7 @@
   :config
   (progn (set-face-attribute 'rime-default-face nil :foreground "#839496" :background "#073642")
          (setq rime-show-candidate 'posframe)
-         (setq rime-user-data-dir "~/Library/Rime")
+         (setq rime-user-data-dir "~/.config/ibus/rime")
          (setq rime-posframe-properties
                (list :background-color "#073642"
                      :foreground-color "#839496"
