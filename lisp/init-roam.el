@@ -4,6 +4,7 @@
 ;;; Code:
 ;;---------------------------support org-mode image scroll line by line
 (use-package iscroll
+  :ensure t
   :diminish iscroll-mode
   :hook ((org-mode markdown-mode) . iscroll-mode))
 
