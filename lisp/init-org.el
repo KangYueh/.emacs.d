@@ -386,6 +386,7 @@ typical word processor."
 ;;-------------------------------------------capture screenshot-----------
 ;; capture screenshot
 (add-hook 'org-mode-hook 'iimage-mode) ; enable iimage-mode for org-mode
+<<<<<<< HEAD
 ;; (defun my/screenshot ()
 ;;   "Take a screenshot into a unique-named file in the current buffer file
 ;;   directory and insert a link to this file."
@@ -412,6 +413,21 @@ typical word processor."
     (insert (concat "[[" filename "]]"))
     (org-display-inline-images)))
 
+=======
+(defun my/screenshot ()
+  "Take a screenshot into a unique-named file in the current buffer file
+  directory and insert a link to this file."
+  (interactive)
+  (setq filename
+        (concat (make-temp-name
+                 (concat  org-roam-directory "img/" ) ) ".png"))
+  (suspend-frame)
+  (call-process-shell-command "scrot" nil nil nil nil "-s" (concat
+                                                            "\"" filename "\"" ))
+  (insert (concat "[[" filename "]]"))
+  (org-display-inline-images)
+  )
+>>>>>>> 8d41e98b23d9d8b48010a98d462f1f4d7d3130bd
 (global-set-key (kbd "C-c n s") 'my/screenshot)
 
 (provide 'init-org)
