@@ -14,7 +14,7 @@
       org_refs "/home/einhep/wdata/roam/paper/" ) ; 自定义的 org-roam 文献笔记目录. 我的 org-roam 根目录是 ~/repos/notes
 
 ;; 第二步: 让 helm-bibtex 读取 Zotero 的信息
-(use-package ivy-bibtex; 这里也可以用 ivy-bibtex 替换 helm-bibtex
+(use-package helm-bibtex; 这里也可以用 ivy-bibtex 替换 helm-bibtex
   :ensure t
   :custom
   (bibtex-completion-notes-path org_refs)
