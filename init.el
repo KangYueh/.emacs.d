@@ -111,7 +111,7 @@
 (require 'init-haskell)
 (require 'init-elm)
 (require 'init-purescript)
-(require 'init-ruby)
+;(require 'init-ruby)
 (require 'init-rails)
 (require 'init-sql)
 (require 'init-ocaml)
@@ -134,8 +134,8 @@
 (require 'init-paredit)
 (require 'init-lisp)
 (require 'init-sly)
-(require 'init-clojure)
-(require 'init-clojure-cider)
+;(require 'init-clojure)
+;(require 'init-clojure-cider)
 
 (when *spell-check-support-enabled*
   (require 'init-spelling))
@@ -197,6 +197,9 @@
 
 ;; Allow users to provide an optional "init-local" containing personal settings
 (require 'init-local nil t)
+
+;;allow users to use wsl
+(require 'init-wsl)
 
 (provide 'init)
 
