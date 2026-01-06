@@ -428,7 +428,21 @@ typical word processor."
   (org-display-inline-images)
   )
 
-(global-set-key (kbd "C-c n s") 'my/screenshot)
+;;compatable for wsl screenshot by einhep on 20260106
+(use-package org-download
+  :after org
+  :bind
+  (:map org-mode-map
+        (("C-c n s" . org-download-screenshot)
+         ("s-y" . org-download-yank)))
+  :custom
+  (org-download-screenshot-method "powershell.exe -Command \"(Get-Clipboard -Format image).Save('$(wslpath -w %s)')\"")
+  )
+;; 设置固定保存目录
+(setq org-download-image-dir "/home/einhep/wdata/roam/img")
+;;20260106 ends here
+
+;;(global-set-key (kbd "C-c n s") 'my-clipboard-image)
 
 (provide 'init-org)
 ;;; init-org.el ends here

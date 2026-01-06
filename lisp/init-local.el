@@ -17,5 +17,17 @@
 
 (window-numbering-mode t)
 
+
+(use-package pyim
+  :ensure t
+  :config
+  (use-package pyim-basedict
+    :ensure t
+    :config (pyim-basedict-enable))
+
+  (setq default-input-method "pyim")
+  (setq pyim-default-scheme 'quanpin)  ; 全拼
+  (setq pyim-page-tooltip 'posframe)   ; 候选框美观（需 posframe）
+  (setq pyim-page-length 5))
 (provide 'init-local)
 ;;;init-local.el ends here

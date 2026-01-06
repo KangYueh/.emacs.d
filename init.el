@@ -201,6 +201,10 @@
 ;;allow users to use wsl
 (require 'init-wsl)
 
+;;basic setting for remote dev by einhep on 20260105
+(require 'init-tramp)
+;;tramp setting ends here
+
 (provide 'init)
 
 ;; Local Variables:
