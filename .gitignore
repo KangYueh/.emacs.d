@@ -1,0 +1,12 @@
+/.emacs.desktop
+/.emacs.desktop.lock
+/elpa-30.2/
+/.session
+/auto-save-list/
+/eln-cache/
+/elpa/
+/forge-database.sqlite
+/history
+/projectile-bookmarks.eld
+/recentf
+/straight/
