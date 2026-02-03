@@ -28,6 +28,7 @@
   ;; 显示 popupinfo
   (corfu-popupinfo-mode))
 
+
 (use-package corfu-terminal
   :straight t
   :after corfu
