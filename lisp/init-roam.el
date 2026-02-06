@@ -44,14 +44,14 @@
       :unnarrowed t)
 
      ;; 问题卡片
-     ("q" "❓ Question Card" plain
+     ("Q" "❓ Question Card" plain
       "%?"
       :if-new (file+head "permanent-notes/${slug}.org"
 			 "#+title: ${title}\n#+date: %U\n#+filetags: :question:\n#+type: Question\n\n** 问题陈述\n\n** 背景\n\n** 当前理解\n\n** 相关卡片")
       :unnarrowed t)
 
      ;; 论证卡片
-     ("a" "🎯 Argument Card" plain
+     ("A" "🎯 Argument Card" plain
       "%?"
       :if-new (file+head "permanent-notes/${slug}.org"
 			 "#+title: ${title}\n#+date: %U\n#+filetags: :argument:\n#+type: Argument\n\n** 主张\n\n** 证据\n\n** 反驳\n\n** 结论")

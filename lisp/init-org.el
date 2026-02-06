@@ -72,68 +72,6 @@
 (define-key global-map (kbd "C-c o l") 'org-clock-in-last)
 (define-key global-map (kbd "C-c o i") 'org-clock-in)
 (define-key global-map (kbd "C-c o o") 'org-clock-out)
-
-;;==============================================
-;; Capture 模板 - Zettelkasten 核心
-;;==============================================
-
-(setq org-capture-templates
-      '(;; 📥 临时笔记：快速捕获想法（待处理）
-	("f" "💡 Fleeting Note" entry
-	 (file+headline "inbox/fleeting-notes.org" "Inbox")
-	 "* INBOX %?\n:PROPERTIES:\n:CREATED: %U\n:TYPE: fleeting\n:SOURCE: %a\n:END:\n%i"
-	 :prepend t
-	 :clock-in t
-	 :clock-resume t)
-
-	;; 📖 论文阅读笔记（需处理）
-	("r" "📖 Paper Reading Note" entry
-	 (file+headline "inbox/fleeting-notes.org" "Reading Notes")
-	 "* INBOX 论文: %^{论文标题}\n:PROPERTIES:\n:CREATED: %U\n:TYPE: paper-reading\n:CITE_KEY: %^{Cite Key}\n:AUTHORS: %^{作者}\n:YEAR: %^{年份}\n:END:\n\n** 快速摘要\n%?\n\n** 关键点\n- \n\n** 我的问题\n- \n"
-	 :prepend t)
-
-	;; 💡 概念卡片（永久笔记）
-	("c" "🔹 Concept Card" entry
-	 (file+headline "permanent-notes/concepts.org" "Concepts")
-	 "* %^{概念名称}\n:PROPERTIES:\n:CREATED: %U\n:ID: %(org-id-new)\n:TYPE: concept\n:TAGS: %^{标签|AI|ML|NLP|CV|DL|Math}\n:END:\n\n** 定义\n\n%?\n\n** 特征\n- \n\n** 应用场景\n- \n\n** 相关概念\n- [[id:][相关概念1]]\n- [[id:][相关概念2]]\n\n** 参考文献\n- [[cite:&key1]]\n"
-	 :prepend t)
-
-	;; ❓ 问题卡片（研究驱动）
-	("q" "❓ Question Card" entry
-	 (file+headline "permanent-notes/questions.org" "Questions")
-	 "* %^{问题}\n:PROPERTIES:\n:CREATED: %U\n:ID: %(org-id-new)\n:TYPE: question\n:STATUS: Open\n:PRIORITY: %^{优先级|High|Medium|Low}\n:END:\n\n** 问题陈述\n\n%?\n\n** 背景和动机\n\n** 当前理解\n- \n\n** 已知的解答\n- \n\n** 需要进一步调查\n- \n\n** 相关卡片\n- [[id:][相关卡片1]]\n"
-	 :prepend t)
-
-	;; 🎯 论证卡片（观点和见解）
-	("a" "🎯 Argument Card" entry
-	 (file+headline "permanent-notes/arguments.org" "Arguments")
-	 "* %^{论证/主张}\n:PROPERTIES:\n:CREATED: %U\n:ID: %(org-id-new)\n:TYPE: argument\n:STRENGTH: %^{强度|weak|medium|strong}\n:CONFIDENCE: %^{信度|low|medium|high}\n:END:\n\n** 主张\n\n%?\n\n** 理由\n1. \n2. \n3. \n\n** 证据\n- \n\n** 反驳和限制\n- \n\n** 结论\n\n** 相关卡片和文献\n- [[id:][相关论点]]\n- [[cite:&key1]]\n"
-	 :prepend t)
-
-	;; 📝 论文笔记（与具体论文绑定）
-	("p" "📄 Paper Note" entry
-	 (file+headline "papers/%<%Y>-%(my/get-paper-slug).org" "Paper Notes")
-	 "* 论文笔记\n:PROPERTIES:\n:CREATED: %U\n:ID: %(org-id-new)\n:TYPE: paper\n:CITE_KEY: %^{Cite Key}\n:END:\n\n** 论文元信息\n- 标题: %^{标题}\n- 作者: %^{作者}\n- 年份: %^{年份}\n- DOI: %^{DOI}\n- PDF: [[file:%^{PDF 路径}]]\n\n** 摘要（用自己的语言）\n\n%?\n\n** 创新贡献（3 个主要贡献）\n1. \n2. \n3. \n\n** 方法论和技术\n\n** 实验和结果\n\n** 相关工作\n\n** 关键数据和图表\n\n** 我的想法和评论\n\n** 提取的卡片\n- [ ] 概念 1: \n- [ ] 概念 2: \n- [ ] 问题: \n- [ ] 论点: \n\n** 后续行动\n- [ ] 深入理解某个部分\n- [ ] 寻找相关论文\n- [ ] 应用到我的研究\n"
-	 :prepend t)
-
-	;; 📑 索引页（主题导航）
-	("i" "📑 Index Page" entry
-	 (file+headline "indices/%<%Y>-index.org" "Indices")
-	 "* %^{主题名称}\n:PROPERTIES:\n:CREATED: %U\n:ID: %(org-id-new)\n:TYPE: index\n:TAGS: Index\n:END:\n\n** 主题概述\n\n%?\n\n** 子主题和分类\n*** [[id:][子主题1]]\n*** [[id:][子主题2]]\n\n** 关键概念卡片\n- [[id:][概念1]]\n- [[id:][概念2]]\n\n** 重要论文\n- [[cite:&key1]]\n- [[cite:&key2]]\n\n** 核心问题\n- [[id:][问题1]]\n- [[id:][问题2]]\n\n** 主要论点和见解\n- [[id:][论点1]]\n- [[id:][论点2]]\n\n** 相关领域\n- [[id:][相关领域1]]\n- [[id:][相关领域2]]\n\n** 最近更新\n- [2025-01-15] 添加新概念\n- [2025-01-10] 更新论文列表\n\n** 下一步\n- [ ] 阅读论文 X\n- [ ] 深化理解 Y\n"
-	 :prepend t)
-
-	;; 📊 综述/项目（汇总性笔记）
-	("s" "📊 Survey/Review" entry
-	 (file+headline "projects/%<%Y>-${slug}.org" "Projects")
-	 "* %^{标题}\n:PROPERTIES:\n:CREATED: %U\n:ID: %(org-id-new)\n:TYPE: survey\n:STATUS: Active\n:END:\n\n** 研究问题和范围\n\n%?\n\n** 相关论文清单\n- [ ] [[cite:&key1]] - \n- [ ] [[cite:&key2]] - \n\n** 关键发现\n1. \n2. \n3. \n\n** 知识空白和挑战\n- \n\n** 未来研究方向\n- \n\n** 提取的核心卡片\n- [[id:][概念1]]\n- [[id:][问题1]]\n- [[id:][论点1]]\n"
-	 :prepend t)
-
-	;; 🎓 文献阅读清单
-	("l" "📚 Reading List" entry
-	 (file+headline "reading-list/todo.org" "To Read")
-	 "* TODO [[cite:&%^{Cite Key}]]\n:PROPERTIES:\n:CREATED: %U\n:PRIORITY: %^{优先级|High|Medium|Low}\n:TAGS: Reading|%^{领域|AI|ML|NLP|CV}\n:END:\n\n%?\n"
-	 :prepend t)))
-
 ;;==============================================
 ;; Refiling 配置
 ;;==============================================
@@ -272,13 +210,13 @@
 	  ((org-agenda-overriding-header "所有概念卡片")
 	   (org-tags-match-list-sublevels t)))))
 
-	("q" "❓ Question Cards"
+	("Q" "❓ Question Cards"
 	 ((tags "TYPE=\"question\""
 	  ((org-agenda-overriding-header "所有问题卡片")
 	   (org-tags-match-list-sublevels t)
 	   (org-agenda-sorting-strategy '(priority-down))))))
 
-	("a" "🎯 Argument Cards"
+	("A" "🎯 Argument Cards"
 	 ((tags "TYPE=\"argument\""
 	  ((org-agenda-overriding-header "所有论证卡片")
 	   (org-tags-match-list-sublevels t)))))
