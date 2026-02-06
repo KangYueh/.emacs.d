@@ -29,7 +29,7 @@
   ;; 补全和显示
   (org-roam-completion-everywhere t)
   (org-roam-node-display-template
-   "${title:*} ${tags:30} | ${type:12}")
+   "${title:*} ${tags:30}")
 
   ;; 数据库
   (org-roam-database-connector 'sqlite3)
@@ -243,7 +243,8 @@
   (citar-register-notes-source
    'citar-org-roam
    '(:name "Org-Roam Notes"
-     :category org-roam
+	   :category org-roam
+	   :hasitems  citar-org-roam-has-items
      :items citar-org-roam-items
      :open citar-org-roam-open
      :create citar-org-roam-create-note
