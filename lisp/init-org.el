@@ -129,6 +129,12 @@
 	 "* %^{标题}\n:PROPERTIES:\n:CREATED: %U\n:ID: %(org-id-new)\n:TYPE: survey\n:STATUS: Active\n:END:\n\n** 研究问题和范围\n\n%?\n\n** 相关论文清单\n- [ ] [[cite:&key1]] - \n- [ ] [[cite:&key2]] - \n\n** 关键发现\n1. \n2. \n3. \n\n** 知识空白和挑战\n- \n\n** 未来研究方向\n- \n\n** 提取的核心卡片\n- [[id:][概念1]]\n- [[id:][问题1]]\n- [[id:][论点1]]\n"
 	 :prepend t)
 
+		;; 📊 项目开展
+	("P" "📊 Projects" entry
+	 (file+headline "/home/einhep/wdata/roam/projects/%<%Y>-${slug}.org" "Projects")
+	 "* %^{标题}\n:PROPERTIES:\n:CREATED: %U\n:ID: %(org-id-new)\n:TYPE: projects\n:STATUS: Active\n:END:\n\n** 研究问题和范围\n\n%?\n\n** 相关论文清单\n- [ ] [[cite:&key1]] - \n- [ ] [[cite:&key2]] - \n\n** 关键发现\n1. \n2. \n3. \n\n** 知识空白和挑战\n- \n\n** 未来研究方向\n- \n\n** 提取的核心卡片\n- [[id:][概念1]]\n- [[id:][问题1]]\n- [[id:][论点1]]\n"
+	 :prepend t)
+
 	;; 🎓 文献阅读清单
 	("l" "📚 Reading List" entry
 	 (file+headline "/home/einhep/wdata/roam/reading-list/todo.org" "To Read")
