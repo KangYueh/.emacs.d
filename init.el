@@ -114,5 +114,22 @@
 (require 'init-roam)
 (require 'init-python)
 
+;; 1️备份文件 (~) 集中到一个目录
+(setq backup-directory-alist
+      '(("." . "~/.emacs.d/backups")))
+
+;; 确保目录存在
+(unless (file-exists-p "~/.emacs.d/backups")
+  (make-directory "~/.emacs.d/backups" t))
+
+;;  自动保存文件 (#xxx#) 集中到一个目录
+(setq auto-save-file-name-transforms
+      '((".*" "~/.emacs.d/auto-save-list/" t)))
+
+;; 确保目录存在
+(unless (file-exists-p "~/.emacs.d/auto-save-list")
+  (make-directory "~/.emacs.d/auto-save-list" t))
+
+
 (provide 'init)
 ;;; init.el ends here
