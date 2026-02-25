@@ -74,7 +74,7 @@
   :after org                            ; ✅ 不依赖 :defer 的 org-roam
   :config
   (setq citar-bibliography             '("~/wdata/zotero/all.bib")
-	citar-notes-paths              '("~/wdata/note/roam") ; ✅ 硬编码避免时序问题
+	citar-notes-paths              '("~/wdata/note/roam/references") ; ✅ 硬编码避免时序问题
 	org-cite-global-bibliography   citar-bibliography
 	org-cite-insert-processor      'citar
 	org-cite-follow-processor      'citar
@@ -107,7 +107,7 @@
   :config
   (setq consult-org-roam-grep-func #'consult-ripgrep)
   :bind
-  (("C-c n s" . consult-org-roam-search-node))) ; ✅ 正确函数名
+  (("C-c n S" . consult-org-roam-search-node))) ; ✅ 正确函数名
 
 ;; ──────────────────────────────────────────────
 ;; 5. org-roam-ui
