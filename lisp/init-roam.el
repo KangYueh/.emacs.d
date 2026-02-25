@@ -29,7 +29,7 @@
   (require 'org-roam-dailies)
 
   ;; ── Dailies ──
-  (setq org-roam-dailies-directory "journals/")
+  (setq org-roam-dailies-directory "daily/")
   (setq org-roam-dailies-capture-templates
 	'(("d" "default" entry
 	   "* REVIEW %<%H:%M> %?"

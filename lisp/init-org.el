@@ -1,4 +1,6 @@
 ;; init-org.el - Org-mode with GTD + Zettelkasten processing support
+(add-hook 'org-mode-hook #'visual-line-mode)
+(setq word-wrap t)
 
 (use-package org
   :ensure t
@@ -66,4 +68,38 @@
 	  (:name "Next Actions" :todo "NEXT")
 	  (:discard (:anything t)))))
 
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c n s") #'my/org-screenshot))
+
+(defvar my/org-image-dir (expand-file-name "~/wdata/note/img/")
+  "Absolute path to store org images.")
+
+(defun my/org-screenshot ()
+  "Take a screenshot with scrot, save it to an absolute image directory,
+and insert the image link at point in the current org buffer."
+  (interactive)
+  (unless (eq major-mode 'org-mode)
+    (user-error "Not in org-mode"))
+
+  ;; ensure image directory exists
+  (unless (file-directory-p my/org-image-dir)
+    (make-directory my/org-image-dir t))
+
+ (let* ((filename (format-time-string "screenshot_%Y%m%d_%H%M%S.png"))
+	 (filepath (expand-file-name filename my/org-image-dir))
+	 (frame (selected-frame)))
+
+    ;; minimize Emacs
+    (iconify-frame frame)
+    ;; small delay to ensure window manager reacts
+    (sleep-for 0.3)
+    ;; call scrot with selection
+    (call-process "scrot" nil nil nil "-s" filepath)
+
+    ;; insert absolute-path org link
+    (insert (format "[[file:%s]]" filepath))
+    (newline)
+
+    ;; display inline image
+    (org-display-inline-images)))
 (provide 'init-org)
