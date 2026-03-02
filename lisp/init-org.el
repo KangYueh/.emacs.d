@@ -19,37 +19,55 @@
 	org-ellipsis "…"
 	org-return-follows-link t
 	org-src-fontify-natively t
-	org-fontify-quote-and-verse-blocks t)
+	org-fontify-quote-and-verse-blocks t
+        org-startup-with-inline-images t
+        org-image-actual-width '(600))
 
   ;; Todo keywords: GTD + REVIEW for processing fleeting/literature to permanent
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "REVIEW(r)" "|" "DONE(d)" "CANCELLED(c)")))
+	'((sequence "TODO(t)" "NEXT(n)" "WAIT(w@/!)" "REVIEW(r)" "|" "DONE(d!)" "CANCELLED(c@)")))
 
-  (setq org-log-done 'time)
+  (setq org-log-done 'time
+        org-log-into-drawer t
+        org-log-state-notes-insert-after-drawers nil)
 
   ;; Agenda: scan main files + roam directory (to see roam TODO/REVIEW)
   (setq org-agenda-files (list "~/wdata/note/org/inbox.org"
 			       "~/wdata/note/org/gtd.org"
 			       "~/wdata/note/org/projects.org"
 			       (expand-file-name "~/wdata/note/roam/daily/")
-				(expand-file-name "~/wdata/note/roam/fleeting/")))  ; roam notes can have TODO or REVIEW
+			       (expand-file-name "~/wdata/note/roam/fleeting/")))
 
   ;; Refile targets: easy to move fleeting → permanent or hub
   (setq org-refile-targets '((org-agenda-files :maxlevel . 4)
-			     ("~/wdata/note/roam/index.org" :maxlevel . 2))  ; optional hub file
+			     ("~/wdata/note/roam/index.org" :maxlevel . 2)
+                             ("~/wdata/note/org/someday.org" :maxlevel . 2))
 	org-refile-use-outline-path 'file
-	org-outline-path-complete-in-steps nil)
+	org-outline-path-complete-in-steps nil
+        org-refile-allow-creating-parent-nodes 'confirm)
 
-  ;; Capture templates: GTD + fleeting entry point
+  ;; Archive location
+  (setq org-archive-location "~/wdata/note/org/archive.org::* From %s")
+
+  ;; Capture templates: GTD + Zettelkasten integration
   (setq org-capture-templates
 	'(("t" "Todo" entry (file "~/wdata/note/org/inbox.org")
-	   "* TODO %?\n%U\n%i" :empty-lines 1)
-	  ("f" "Fleeting Note" entry (file+headline "~/wdata/note/org/inbox.org" "Fleeting Ideas")
-	   "* REVIEW %?\n%U\n%i\nCaptured in: %a" :empty-lines 1)
-	  ("n" "Quick Note" entry (file "~/wdata/note/org/inbox.org")
-	   "* %?\n%U\n%i" :empty-lines 1)
-	  ("p" "Project" entry (file "~/wdata/note/org/projects.org")
-	   "* TODO %?\n%U\n%i\n** NEXT First action" :empty-lines 1)))
+	   "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i\n%a" :empty-lines 1)
+
+          ("n" "Quick Note" entry (file "~/wdata/note/org/inbox.org")
+	   "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i\n%a" :empty-lines 1)
+
+          ("p" "Project" entry (file "~/wdata/note/org/projects.org")
+	   "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n** Purpose\n\n** Outcome\n\n** NEXT First action\n" :empty-lines 1)
+
+          ("m" "Meeting" entry (file "~/wdata/note/org/inbox.org")
+           "* Meeting: %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n** Attendees\n\n** Agenda\n\n** Notes\n\n** Action Items\n" :empty-lines 1)
+
+          ("j" "Journal" entry (file+datetree "~/wdata/note/org/journal.org")
+           "* %<%H:%M> %?\n" :empty-lines 1)
+
+          ("r" "Reading/Research" entry (file "~/wdata/note/org/inbox.org")
+           "* REVIEW [[%:link][%:description]]\n:PROPERTIES:\n:CREATED: %U\n:SOURCE: %:link\n:END:\n\n%i\n%?" :empty-lines 1)))
 
   :bind (("C-c a" . org-agenda)
 	 ("C-c c" . org-capture)
@@ -62,14 +80,77 @@
   :config
   (org-super-agenda-mode)
   (setq org-super-agenda-groups
-	'((:name "Process / Review" :todo "REVIEW")
-	  (:name "Today" :time-grid t :date today :scheduled today)
-	  (:name "Important" :priority "A")
-	  (:name "Next Actions" :todo "NEXT")
-	  (:discard (:anything t)))))
+	'((:name "⚡ Overdue"
+           :deadline past
+           :order 1)
+          (:name "📅 Today"
+           :time-grid t
+           :date today
+           :scheduled today
+           :order 2)
+          (:name "🔥 Important & Urgent"
+           :and (:priority "A" :todo "TODO")
+           :order 3)
+          (:name "📝 Process / Review"
+           :todo "REVIEW"
+           :order 4)
+          (:name "➡️  Next Actions"
+           :todo "NEXT"
+           :order 5)
+          (:name "⏳ Waiting"
+           :todo "WAIT"
+           :order 6)
+          (:name "📚 Reading/Research"
+           :tag "reading"
+           :order 7)
+          (:name "📊 Projects"
+           :tag "project"
+           :order 8)
+          (:name "📥 Inbox"
+           :file-path "inbox.org"
+           :order 9)
+          (:discard (:anything t))))
 
-(with-eval-after-load 'org
-  (define-key org-mode-map (kbd "C-c n s") #'my/org-screenshot))
+  ;; Custom agenda views
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-agenda-span 'day)
+                        (org-super-agenda-groups
+                         '((:name "Today"
+                            :time-grid t
+                            :date today
+                            :scheduled today
+                            :order 1)))))
+            (todo "REVIEW"
+                  ((org-agenda-overriding-header "📝 To Process")))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "➡️  Next Actions")))
+            (todo "WAIT"
+                  ((org-agenda-overriding-header "⏳ Waiting On")))))
+
+          ("w" "Weekly Review"
+           ((agenda "" ((org-agenda-span 'week)))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "📋 All TODOs")))
+            (todo "REVIEW"
+                  ((org-agenda-overriding-header "📝 To Process")))))
+
+          ("r" "Reading & Research"
+           ((tags-todo "reading"
+                       ((org-agenda-overriding-header "📚 Reading List")))
+            (tags-todo "research"
+                       ((org-agenda-overriding-header "🔬 Research Tasks")))
+            (todo "REVIEW"
+                  ((org-agenda-overriding-header "📝 To Process")))))
+
+          ("p" "Projects"
+           ((tags "project"
+                  ((org-agenda-overriding-header "📊 Active Projects")
+                   (org-tags-match-list-sublevels t))))))))
+
+;; ──────────────────────────────────────────────
+;; Helper functions for Zettelkasten workflow
+;; ──────────────────────────────────────────────
 
 (defvar my/org-image-dir (expand-file-name "~/wdata/note/img/")
   "Absolute path to store org images.")
@@ -85,7 +166,7 @@ and insert the image link at point in the current org buffer."
   (unless (file-directory-p my/org-image-dir)
     (make-directory my/org-image-dir t))
 
- (let* ((filename (format-time-string "screenshot_%Y%m%d_%H%M%S.png"))
+  (let* ((filename (format-time-string "screenshot_%Y%m%d_%H%M%S.png"))
 	 (filepath (expand-file-name filename my/org-image-dir))
 	 (frame (selected-frame)))
 
@@ -102,4 +183,51 @@ and insert the image link at point in the current org buffer."
 
     ;; display inline image
     (org-display-inline-images)))
+
+(defun my/org-insert-created-timestamp ()
+  "Insert CREATED property with current timestamp."
+  (interactive)
+  (org-set-property "CREATED" (format-time-string "[%Y-%m-%d %a %H:%M]")))
+
+(defun my/org-process-inbox ()
+  "Process inbox items - review and refile or convert to roam notes."
+  (interactive)
+  (find-file "~/wdata/note/org/inbox.org")
+  (goto-char (point-min))
+  (org-next-visible-heading 1))
+
+(defun my/org-weekly-review ()
+  "Start weekly review process."
+  (interactive)
+  (org-agenda nil "w"))
+
+(defun my/org-link-to-roam-node ()
+  "Convert current heading to org-roam node and replace with link."
+  (interactive)
+  (let ((title (org-get-heading t t t t))
+        (content (org-get-entry)))
+    (org-roam-capture- :node (org-roam-node-create :title title)
+                       :props '(:immediate-finish t))
+    (insert content)
+    (org-back-to-heading)
+    (org-cut-subtree)
+    (org-roam-node-insert)))
+
+;; Auto-add CREATED property to new headings
+(defun my/org-add-created-property ()
+  "Add CREATED property if not exists."
+  (when (and (eq major-mode 'org-mode)
+             (org-at-heading-p)
+             (not (org-entry-get nil "CREATED")))
+    (my/org-insert-created-timestamp)))
+
+(add-hook 'org-insert-heading-hook #'my/org-add-created-property)
+
+;; Keybindings
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c n s") #'my/org-screenshot)
+  (define-key org-mode-map (kbd "C-c w r") #'my/org-weekly-review)
+  (define-key org-mode-map (kbd "C-c w p") #'my/org-process-inbox)
+  (define-key org-mode-map (kbd "C-c w l") #'my/org-link-to-roam-node))
+
 (provide 'init-org)

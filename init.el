@@ -111,7 +111,10 @@
 (require 'init-markdown)
 
 (require 'init-org)
+(require 'init-org-appearance)
+(require 'init-org-export)
 (require 'init-roam)
+(require 'init-zettelkasten)
 (require 'init-python)
 
 ;; 1️备份文件 (~) 集中到一个目录
