@@ -1,6 +1,27 @@
-# Summary: Your Enhanced Emacs Zettelkasten Configuration
+# Enhanced Emacs Zettelkasten Configuration
 
-## What Was Done
+> A complete, production-ready Zettelkasten system for Emacs with 6 note types, automated workflows, quality control tools, and beautiful styling.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Emacs](https://img.shields.io/badge/Emacs-27.1+-purple.svg)](https://www.gnu.org/software/emacs/)
+[![Org-roam](https://img.shields.io/badge/Org--roam-2.2+-blue.svg)](https://www.orgroam.com/)
+
+## 🚀 Quick Start
+
+**New user?** Start here:
+
+1. **[INDEX.md](INDEX.md)** - Complete documentation navigation
+2. **[GETTING_STARTED.md](GETTING_STARTED.md)** - 5-minute quick start ⭐
+3. **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Printable cheat sheet 📋
+
+```bash
+# Quick install
+git clone https://github.com/KangYueh/.emacs.d.git ~/.emacs.d
+mkdir -p ~/wdata/note/roam/{daily,fleeting,permanent,concepts,methods,questions,references}
+# Restart Emacs, then: M-x org-roam-db-sync
+```
+
+## What You Get
 
 I've completely enhanced your Emacs configuration with a production-ready Zettelkasten system. Here's what you now have:
 
