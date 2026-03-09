@@ -6,18 +6,23 @@
 
 ;;; Code:
 
-(straight-use-package 'ibuffer-vc)
+(use-package ibuffer-vc
+  :straight t
+  :defer t)
 
 (defun ibuffer-set-up-preferred-filters ()
-  (ibuffer-vc-set-filter-groups-by-vc-root)
+  (when (fboundp 'ibuffer-vc-set-filter-groups-by-vc-root)
+    (ibuffer-vc-set-filter-groups-by-vc-root))
   (unless (eq ibuffer-sorting-mode 'filename/process)
-    (ibuffer-do-sort-by-filename/process)))
+    (when (fboundp 'ibuffer-do-sort-by-filename/process)
+      (ibuffer-do-sort-by-filename/process))))
 
 (add-hook 'ibuffer-hook 'ibuffer-set-up-preferred-filters)
 
 (setq-default ibuffer-show-empty-filter-groups nil)
 
-(sanityinc/fullframe-mode 'ibuffer-mode)
+(with-eval-after-load 'init-utils
+  (sanityinc/fullframe-mode 'ibuffer-mode))
 
 
 (with-eval-after-load 'ibuffer

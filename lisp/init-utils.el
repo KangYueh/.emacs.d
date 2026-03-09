@@ -48,8 +48,8 @@ BUFFER and ALIST are as for `display-buffer-full-frame'."
   (setq-local mode-name name))
 
 (defun sanityinc/major-mode-lighter (mode name)
-  (add-hook (derived-mode-hook-name mode)
-            (apply-partially 'sanityinc/set-major-mode-name name)))
+  (let ((hook (intern (concat (symbol-name mode) "-hook"))))
+    (add-hook hook (apply-partially 'sanityinc/set-major-mode-name name))))
 
 
 ;; String utilities missing from core emacs

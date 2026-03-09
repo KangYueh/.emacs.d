@@ -26,7 +26,8 @@
       (isearch-update-ring isearch-string isearch-regexp)
       (let (search-nonincremental-instead)
         (ignore-errors (isearch-done t t)))
-      (consult-line query)))
+      (when (fboundp 'consult-line)
+        (consult-line query))))
 
   (define-key isearch-mode-map (kbd "C-o") 'sanityinc/isearch-occur)
   (define-key isearch-mode-map (kbd "C-c C-o") 'sanityinc/isearch-occur))

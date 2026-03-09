@@ -117,6 +117,42 @@
 
 ## Common Errors
 
+### Error: "Invalid function: sanityinc/fullframe-mode"
+
+**Cause:** Function dependency loading order issue (fixed in 2024-03-09)
+
+**Fix:**
+```bash
+# Delete byte-compiled files
+rm -f ~/.emacs.d/lisp/*.elc
+
+# Restart Emacs
+# Configuration will automatically recompile with fixes
+```
+
+**What was fixed:**
+- Added `early-init.el` to prevent package.el conflicts
+- Fixed function loading order with `with-eval-after-load`
+- Added safety checks for optional functions
+
+### Error: "straight.el was loaded when package.el was already loaded"
+
+**Cause:** package.el loading before straight.el
+
+**Fix:**
+```elisp
+# This is now fixed with early-init.el
+# If you still see this, ensure early-init.el exists:
+ls ~/.emacs.d/early-init.el
+
+# If missing, create it with:
+cat > ~/.emacs.d/early-init.el << 'EOF'
+;;; early-init.el --- Early initialization -*- lexical-binding: t -*-
+(setq package-enable-at-startup nil)
+(provide 'early-init)
+EOF
+```
+
 ### Error: "org-roam-db-autosync-mode: Wrong type argument"
 
 **Cause:** Database schema mismatch

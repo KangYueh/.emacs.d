@@ -189,11 +189,7 @@
   "Set custom colors for org links."
   (set-face-attribute 'org-link nil
                       :foreground "#89b4fa"
-                      :underline t)
-  (set-face-attribute 'org-roam-link nil
-                      :foreground "#f38ba8"
-                      :underline nil
-                      :weight 'bold))
+                      :underline t))
 
 (add-hook 'org-mode-hook #'my/org-link-colors)
 

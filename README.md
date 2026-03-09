@@ -318,6 +318,24 @@ M-x org-roam-db-sync
 (setq mixed-pitch-mode nil)
 ```
 
+### Configuration Errors on Startup
+
+If you see errors like `Invalid function: sanityinc/fullframe-mode` or warnings about `package.el`:
+
+```bash
+# 1. Delete byte-compiled files
+rm -f ~/.emacs.d/lisp/*.elc
+
+# 2. Restart Emacs
+# The configuration will automatically recompile
+```
+
+**Recent fixes (2024-03-09):**
+- ✓ Added `early-init.el` to prevent package.el conflicts
+- ✓ Fixed function dependency loading order
+- ✓ Added safety checks for optional functions
+- ✓ Improved error handling and robustness
+
 ## 📦 What's Included
 
 ### Packages Used

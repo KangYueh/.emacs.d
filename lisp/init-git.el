@@ -24,7 +24,8 @@
   :config
   (setq magit-diff-refine-hunk 'all)
   (setq magit-diff-visit-prefer-worktree t)
-  (sanityinc/fullframe-mode 'magit-status-mode)
+  (with-eval-after-load 'init-utils
+    (sanityinc/fullframe-mode 'magit-status-mode))
   :bind (("C-x g" . magit-status)
          ("M-<F12>" . magit-status)
          ("C-x M-g" . magit-dispatch)
