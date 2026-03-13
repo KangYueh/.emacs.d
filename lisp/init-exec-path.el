@@ -2,7 +2,7 @@
 
 (use-package exec-path-from-shell
   :straight t
-  :defer t
+  :demand t
   :config
   ;; 先指定要同步的环境变量
   (dolist (var '("PATH" "SSH_AUTH_SOCK" "SSH_AGENT_PID"

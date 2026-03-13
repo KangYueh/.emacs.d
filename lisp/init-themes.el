@@ -14,13 +14,20 @@
 ;; ============================================================================
 ;; 主题配置
 ;; ============================================================================
-(use-package catppuccin-theme
+
+;; 安装 Dracula 主题
+(use-package dracula-theme
   :straight t
-  :custom
-  (catppuccin-flavor 'mocha)
-  (catppuccin-italic-comments t)
   :config
-  (load-theme 'catppuccin :no-confirm))
+  (load-theme 'dracula :no-confirm))
+
+;; 增强缩进可见性 - 显示缩进指示线
+(use-package indent-guide
+  :straight t
+  :hook (prog-mode . indent-guide-mode)
+  :config
+  (setq indent-guide-char "│"
+        indent-guide-recursive t))
 
 ;; ============================================================================
 ;; UI 增强

@@ -14,22 +14,22 @@
 
 ;; 使用 `use-package` 加载 bug-reference-github
 (use-package bug-reference-github
-  :ensure t
+  :straight t
   :hook (prog-mode . bug-reference-prog-mode))
 
 
 (use-package github-clone
-  :ensure t)
+  :straight t)
 
 (use-package forge
-  :ensure t)
+  :straight t)
 
 (use-package github-review
-  :ensure t)
+  :straight t)
 
 ;; 使用 `flymake-actionlint` 时，确保正确设置钩子
 (use-package flymake-actionlint
-  :ensure t
+  :straight t
   :hook (yaml-mode . flymake-actionlint-action-load-when-actions-file))
   
 (provide 'init-github)

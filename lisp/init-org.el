@@ -230,4 +230,8 @@ and insert the image link at point in the current org buffer."
   (define-key org-mode-map (kbd "C-c w p") #'my/org-process-inbox)
   (define-key org-mode-map (kbd "C-c w l") #'my/org-link-to-roam-node))
 
+;; for the font scaling in latex preview
+(with-eval-after-load 'org
+  (setq org-format-latex-options
+        (plist-put org-format-latex-options :scale 1.5))) ; 将 1.5 改为你喜欢的倍数
 (provide 'init-org)

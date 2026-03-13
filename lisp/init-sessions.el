@@ -2,6 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
+;; 确保 sanityinc/time-subtract-millis 函数可用
+(require 'init-benchmarking)
+
 ;; save a list of open files in ~/.emacs.d/.emacs.desktop
 (setq desktop-path (list user-emacs-directory)
       desktop-auto-save-timeout 600)

@@ -16,7 +16,7 @@
 (use-package rg
   :straight t
   :if (executable-find "rg")
-  :bind (("M-?" . rg-project)))
+  :bind (("M-*" . rg-project)))
 
 
 

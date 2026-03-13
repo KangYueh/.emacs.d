@@ -128,15 +128,17 @@
   (require 'ox-gfm))
 
 ;; ──────────────────────────────────────────────
-;; 3. Pandoc Integration
+;; 3. Pandoc Integration (需要安装 pandoc 命令)
 ;; ──────────────────────────────────────────────
 
-(use-package ox-pandoc
-  :ensure t
-  :after ox
-  :config
-  (setq org-pandoc-options-for-docx '((standalone . t)))
-  (setq org-pandoc-options-for-latex-pdf '((pdf-engine . "xelatex"))))
+;; 仅在 pandoc 已安装时加载
+(when (executable-find "pandoc")
+  (use-package ox-pandoc
+    :straight t
+    :after ox
+    :config
+    (setq org-pandoc-options-for-docx '((standalone . t)))
+    (setq org-pandoc-options-for-latex-pdf '((pdf-engine . "xelatex")))))
 
 ;; ──────────────────────────────────────────────
 ;; 4. Export Dispatcher Enhancements
