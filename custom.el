@@ -4,10 +4,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   '("/home/einhep/wdata/roam/reading-list/todo.org"
-     "/home/einhep/wdata/roam/projects/todo.org"))
- '(org-fold-catch-invisible-edits 'show nil nil "Customized with use-package org")
+ '(custom-safe-themes
+   '("970f1a4c7349ba44a4d06a80cc88dd79961c054f37865c93c9cfec40806ea001"
+     default))
  '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

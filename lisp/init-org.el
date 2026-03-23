@@ -156,7 +156,7 @@
   "Absolute path to store org images.")
 
 (defun my/org-screenshot ()
-  "Take a screenshot with scrot, save it to an absolute image directory,
+  "Take a screenshot, save it to an absolute image directory,
 and insert the image link at point in the current org buffer."
   (interactive)
   (unless (eq major-mode 'org-mode)
@@ -168,7 +168,24 @@ and insert the image link at point in the current org buffer."
 
   (let* ((filename (format-time-string "screenshot_%Y%m%d_%H%M%S.png"))
 	 (filepath (expand-file-name filename my/org-image-dir))
-	 (frame (selected-frame)))
+	 (status
+	 (cond
+	 ((and (getenv "WAYLAND_DISPLAY")
+		(executable-find "grim")
+		(executable-find "slurp"))
+	 (let* ((region-output (shell-command-to-string "slurp"))
+		 (region (car (split-string region-output "\n" t))))
+	 (if region
+		 (call-process "grim" nil nil nil "-g" region filepath)
+	1)))
+	 ((executable-find "scrot")
+	 (call-process "scrot" nil nil nil "-s" filepath))
+	 ((executable-find "maim")
+	 (call-process "maim" nil nil nil "-s" filepath))
+	 ((executable-find "import")
+	 (call-process "import" nil nil nil filepath))
+	 (t
+	 (user-error "No screenshot tool found. Install grim+slurp or scrot/maim/import")))))
 
     ;; minimize Emacs
     (iconify-frame frame)
@@ -234,4 +251,17 @@ and insert the image link at point in the current org buffer."
 (with-eval-after-load 'org
   (setq org-format-latex-options
         (plist-put org-format-latex-options :scale 1.5))) ; 将 1.5 改为你喜欢的倍数
+
+(setq org-preview-latex-default-process 'dvisvgm)
+(setq org-preview-latex-process-alist
+      '((dvisvgm
+         :programs ("xelatex" "dvisvgm")
+         :description "xdv > svg"
+         :message "rendering via xelatex + dvisvgm"
+         :image-input-type "xdv"
+         :image-output-type "svg"
+         :image-size-adjust (1.0 . 1.0)
+         :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+         ;; 关键修改：去掉 --zoom=%Z，改用固定缩放或让 dvisvgm 默认处理
+         :image-converter ("dvisvgm %f --no-fonts --exact-bbox --zoom=1.5 -p 1 -o %O"))))
 (provide 'init-org)
